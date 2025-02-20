@@ -16,7 +16,7 @@ type Db struct {
 	Username string `yaml:"username" env:"DB_USERNAME" env-required:"true"`
 	Password string `yaml:"password" env:"DB_PASSWORD" env-required:"true"`
 	DbName   string `yaml:"dbname" env:"DB_NAME" env-required:"true"`
-	Sslmode  string `yaml:"sslmode" env:"DB_SSLMODE" env-default:"disable"`
+	SslMode  string `yaml:"sslmode" env:"DB_SSLMODE" env-default:"disable"`
 }
 type Server struct {
 	Port string `yaml:"port" env:"PORT" env-default:"8080"`
