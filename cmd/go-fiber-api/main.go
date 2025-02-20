@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/rajivreddy/go-fiber-pgsql/pkg/config"
 	booksroutes "github.com/rajivreddy/go-fiber-pgsql/pkg/http/routes/books"
 	"github.com/rajivreddy/go-fiber-pgsql/pkg/postgres"
@@ -22,6 +23,8 @@ func main() {
 
 	// Start Fiber Server
 	app := fiber.New()
+	app.Use(logger.New())
+
 	api := app.Group("/api")
 	booksroutes.SetupRoutes(api)
 	// Start the server on port 3000

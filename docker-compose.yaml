@@ -1,5 +1,12 @@
 services:
-  db:
+  api:
+    build: .
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+  postgres:
     image: postgres
     restart: always
     environment:
