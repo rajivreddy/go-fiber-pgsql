@@ -1,4 +1,4 @@
-# Sample Go REST API 
+# Sample Go REST API
 
 ### Frameworks
 1. gorm
@@ -11,8 +11,8 @@ docker-compose pull
 docker-compose build
 docker-compose up
 +] Running 2/2
- ✔ Container go-fiber-pgsql-postgres-1  Created                                                                                                                                                                       0.0s 
- ✔ Container go-fiber-pgsql-api-1       Recreated                                                                                                                                                                     0.0s 
+ ✔ Container go-fiber-pgsql-postgres-1  Created                                                                                                                                                                       0.0s
+ ✔ Container go-fiber-pgsql-api-1       Recreated                                                                                                                                                                     0.0s
 Attaching to api-1, postgres-1
 ```
 
