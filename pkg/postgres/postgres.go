@@ -35,13 +35,38 @@ func AutoMigrate(cfg *config.Config) error {
 		log.Fatal(err)
 		return err
 	}
-	error := db.AutoMigrate(&datatypes.Book{})
+	error := db.AutoMigrate(&datatypes.Book{}, &datatypes.User{})
 	if error != nil {
 		log.Fatal(error)
 		return error
 	}
+
 	log.Printf("Auto Migration has been completed")
 	return nil
+}
+
+func CreateUser(user datatypes.User) (int, error) {
+	if db == nil {
+		return 0, fmt.Errorf("database not initialized")
+	}
+	err := db.Create(&user).Error
+	if err != nil {
+		return 0, err
+	}
+	log.Printf("User has been created with id %d", user.ID)
+	return user.ID, nil
+}
+
+func GetUser(username string) (datatypes.User, error) {
+	if db == nil {
+		return datatypes.User{}, fmt.Errorf("database not initialized")
+	}
+	var user datatypes.User
+	err := db.Where("username = ?", username).First(&user).Error
+	if err != nil {
+		return datatypes.User{}, err
+	}
+	return user, nil
 }
 
 func CreateBook(book datatypes.Book) (int, error) {

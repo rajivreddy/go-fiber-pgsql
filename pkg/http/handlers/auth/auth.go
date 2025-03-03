@@ -6,6 +6,8 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
+	users "github.com/rajivreddy/go-fiber-pgsql/pkg/http/handlers/users"
+	"github.com/rajivreddy/go-fiber-pgsql/pkg/postgres"
 )
 
 func Login(c *fiber.Ctx) error {
@@ -21,9 +23,19 @@ func Login(c *fiber.Ctx) error {
 	log.Printf("Username: %s, Password: %s", loginInput.Username, loginInput.Password)
 
 	// Check if username and password are correct
-	if loginInput.Username != "admin" || loginInput.Password != "admin" {
+
+	user, error := postgres.GetUser(loginInput.Username)
+	if error != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"error": error.Error(),
+		})
+	}
+	if !users.Verify(user.Password, loginInput.Password) {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
+
+	log.Printf("User: %v", user)
+
 	// Generate JWT token
 	token := jwt.New(jwt.SigningMethodHS256)
 	log.Printf("Token: %v", token)
